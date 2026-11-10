@@ -210,6 +210,17 @@
     footer a:hover { text-decoration: underline; }
     footer .mini { font-size: 0.78rem; margin-top: 0.4rem; }
 
+    /* Enlace semi-oculto hacia la zona musical */
+    .huevo {
+      display: inline-block;
+      font-size: 1.05rem;
+      opacity: 0.25;
+      text-decoration: none;
+      margin-top: 0.7rem;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .huevo:hover, .huevo:focus-visible { opacity: 1; transform: scale(1.25); }
+
     @media (max-width: 560px) {
       .hero { padding-top: 2.5rem; }
       .bio { font-size: 0.9rem; }
@@ -251,6 +262,7 @@
       <a href="https://raftxo.github.io" target="_blank" rel="noopener">raftxo.github.io</a>
     </p>
     <p class="mini">Hecho a mano con HTML, CSS y <a href="https://d3js.org" target="_blank" rel="noopener">d3.js</a> — todo en un solo index.html</p>
+    <a class="huevo" href="music.html" aria-label="Zona musical: grafo del UK garage" title="🎧 psst... también me va la música">🎵</a>
   </footer>
 
   <div id="tooltip" role="tooltip" aria-hidden="true"></div>
