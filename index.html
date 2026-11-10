@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raftxo · Sobre mí</title>
+  <meta name="description" content="Sobre mí: Raftxo, desarrollador web fullstack junior. Explora mis skills en un grafo interactivo.">
+  <meta name="theme-color" content="#0b1020">
+  <meta property="og:title" content="Raftxo · Sobre mí">
+  <meta property="og:description" content="Desarrollador web fullstack junior. Explora mis skills en un grafo interactivo.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E%F0%9F%95%B8%EF%B8%8F%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --fondo: #0b1020;
+      --fondo2: #0f172a;
+      --texto: #e2e8f0;
+      --texto-suave: #94a3b8;
+      --borde: rgba(148, 163, 184, 0.16);
+      --acento: #38bdf8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--texto);
+      min-height: 100vh;
+      background:
+        radial-gradient(1200px 600px at 50% -10%, rgba(56, 189, 248, 0.09), transparent 60%),
+        radial-gradient(900px 500px at 88% 110%, rgba(192, 132, 252, 0.07), transparent 60%),
+        var(--fondo);
+    }
+
+    /* ─────────── Cabecera ─────────── */
+    .hero { text-align: center; padding: 3.5rem 1.25rem 0; }
+    .saludo { color: var(--texto-suave); font-size: 1.05rem; margin: 0 0 0.25rem; }
+    .hero h1 {
+      margin: 0;
+      font-family: "Space Grotesk", "Inter", sans-serif;
+      font-size: clamp(2.6rem, 7vw, 4.2rem);
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .tagline {
+      margin: 0.9rem 0 0;
+      color: var(--acento);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .bio {
+      max-width: 640px;
+      margin: 1.1rem auto 0;
+      color: var(--texto-suave);
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+    .bio strong { color: var(--texto); }
+
+    /* ─────────── Barra de herramientas ─────────── */
+    .toolbar {
+      width: min(1080px, calc(100% - 2rem));
+      margin: 2.2rem auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .leyenda { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--texto-suave);
+      background: rgba(148, 163, 184, 0.08);
+      border: 1px solid var(--borde);
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+    }
+    .chip i { width: 10px; height: 10px; border-radius: 50%; }
+
+    #reiniciar {
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--texto);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.18), rgba(56, 189, 248, 0.08));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 0.45rem 0.9rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    #reiniciar:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(56, 189, 248, 0.25); }
+    #reiniciar:active { transform: translateY(0); }
+
+    /* ─────────── Grafo ─────────── */
+    #grafo {
+      position: relative;
+      width: min(1080px, calc(100% - 2rem));
+      margin: 1rem auto 0;
+      height: clamp(520px, 72vh, 780px);
+      background:
+        radial-gradient(closest-side at 50% 45%, rgba(56, 189, 248, 0.05), transparent),
+        var(--fondo2);
+      border: 1px solid var(--borde);
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(2, 6, 23, 0.5);
+      overflow: hidden;
+    }
+    #grafo svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+      animation: aparecer 0.7s ease both;
+    }
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(10px) scale(0.985); }
+    }
+
+    .aviso { color: var(--texto-suave); text-align: center; padding: 2rem 1rem; }
+
+    /* enlaces */
+    line { stroke-opacity: 0.35; transition: stroke-opacity 0.15s ease; }
+    svg.resaltado line:not(.realce) { stroke-opacity: 0.06; }
+    line.realce { stroke-opacity: 0.9; stroke-width: 2.2; }
+
+    /* nodos */
+    .nodo { cursor: grab; transition: opacity 0.15s ease; }
+    svg.resaltado .nodo:not(.realce) { opacity: 0.18; }
+    body.arrastrando, body.arrastrando .nodo { cursor: grabbing; }
+
+    .nodo circle.circulo {
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: transform 0.18s ease, filter 0.2s ease;
+    }
+    .nodo:hover circle.circulo { transform: scale(1.1); filter: brightness(1.2); }
+
+    .nodo .anillo { opacity: 0; transition: opacity 0.2s ease; }
+    .nodo.fijado .anillo { opacity: 0.9; }
+
+    .nodo text { user-select: none; pointer-events: none; }
+    .nodo .etiqueta { font-size: 11px; fill: #94a3b8; font-weight: 600; }
+    .nodo .etiqueta.categoria { font-size: 12.5px; fill: #e2e8f0; }
+    .nodo .etiqueta.yo {
+      font-size: 15px;
+      fill: #f8fafc;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+    }
+    .nodo .icono.yo { font-size: 26px; }
+    .nodo .icono.categoria { font-size: 13px; }
+
+    .pista {
+      width: min(1080px, calc(100% - 2rem));
+      margin: 0.9rem auto 0;
+      text-align: center;
+      color: #64748b;
+      font-size: 0.8rem;
+    }
+
+    /* ─────────── Tooltip ─────────── */
+    #tooltip {
+      position: fixed;
+      z-index: 50;
+      pointer-events: none;
+      max-width: 250px;
+      padding: 0.65rem 0.85rem;
+      background: rgba(10, 16, 32, 0.93);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(2, 6, 23, 0.6);
+      font-size: 0.82rem;
+      line-height: 1.45;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    #tooltip.visible { opacity: 1; transform: none; }
+    #tooltip h3 { margin: 0 0 0.25rem; font-size: 0.95rem; font-family: "Space Grotesk", sans-serif; }
+    #tooltip .chip-mini {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid;
+    }
+    #tooltip .nivel { letter-spacing: 2px; color: var(--acento); font-size: 0.78rem; margin-top: 0.3rem; }
+    #tooltip p { margin: 0.35rem 0 0; color: var(--texto-suave); }
+    #tooltip .mini { font-size: 0.72rem; color: #64748b; }
+
+    /* ─────────── Pie ─────────── */
+    footer { text-align: center; padding: 3rem 1rem 2.5rem; color: #64748b; font-size: 0.85rem; }
+    footer a { color: var(--acento); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    footer .mini { font-size: 0.78rem; margin-top: 0.4rem; }
+
+    @media (max-width: 560px) {
+      .hero { padding-top: 2.5rem; }
+      .bio { font-size: 0.9rem; }
+      #grafo { height: clamp(440px, 62vh, 640px); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <p class="saludo">👋 ¡Hola! Soy</p>
+    <h1>Raftxo</h1>
+    <p class="tagline">Desarrollador Web Fullstack Junior</p>
+    <p class="bio">
+      Me gusta construir cosas para la web, desde la API hasta el último píxel.
+      Este grafo es un mapa interactivo de mis skills: cada punto es una tecnología
+      que uso o estoy aprendiendo. <strong>Arrastra los nodos y ordénalos a tu gusto.</strong>
+    </p>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <div class="leyenda" id="leyenda" aria-label="Leyenda de categorías"></div>
+      <button id="reiniciar" title="Suelta todos los nodos y recoloca el grafo">↺ Reiniciar grafo</button>
+    </div>
+
+    <div id="grafo">
+      <noscript><p class="aviso">⚠️ Necesitas JavaScript para ver el grafo interactivo.</p></noscript>
+    </div>
+
+    <p class="pista">
+      🖱️ Arrastra los nodos para moverlos · doble clic fija o suelta un nodo · el tamaño indica el nivel
+    </p>
+  </main>
+
+  <footer>
+    <p>
+      <a href="https://github.com/Raftxo" target="_blank" rel="noopener">GitHub</a> ·
+      <a href="https://raftxo.github.io" target="_blank" rel="noopener">raftxo.github.io</a>
+    </p>
+    <p class="mini">Hecho a mano con HTML, CSS y <a href="https://d3js.org" target="_blank" rel="noopener">d3.js</a> — todo en un solo index.html</p>
+  </footer>
+
+  <div id="tooltip" role="tooltip" aria-hidden="true"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      const contenedor = document.getElementById("grafo");
+      if (typeof d3 === "undefined") {
+        contenedor.innerHTML = '<p class="aviso">⚠️ No se pudo cargar d3.js (¿sin conexión?). El grafo se descarga desde un CDN.</p>';
+        return;
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         1. DATOS — ✏️ EDITA AQUÍ TUS SKILLS
+         Para añadir una skill: añade una línea al array SKILLS con su
+         categoría ("frontend" | "backend" | "datos" | "tools") y nivel 1-5.
+         ══════════════════════════════════════════════════════════════ */
+
+      const YO = {
+        id: "yo",
+        tipo: "yo",
+        nombre: "Raftxo",
+        icono: "🧑‍💻",
+        color: "#f8fafc",
+        desc: "Desarrollador web fullstack junior. Me gusta construir cosas para la web, del servidor al navegador.",
+      };
+
+      const CATEGORIAS = [
+        { id: "frontend", tipo: "categoria", nombre: "Frontend",       icono: "🎨", color: "#38bdf8", desc: "Lo que se ve y se toca en el navegador." },
+        { id: "backend",  tipo: "categoria", nombre: "Backend",        icono: "⚙️", color: "#4ade80", desc: "Lógica de negocio, APIs y servidores." },
+        { id: "datos",    tipo: "categoria", nombre: "Bases de datos", icono: "🗄️", color: "#fbbf24", desc: "Donde vive y se consulta la información." },
+        { id: "tools",    tipo: "categoria", nombre: "Herramientas",   icono: "🧰", color: "#c084fc", desc: "Mi flujo de trabajo del día a día." },
+      ];
+
+      const SKILLS = [
+        /* Frontend */
+        { id: "html",     nombre: "HTML5",      cat: "frontend", nivel: 4, desc: "Estructura semántica y accesible." },
+        { id: "css",      nombre: "CSS3",       cat: "frontend", nivel: 4, desc: "Flexbox, Grid y animaciones." },
+        { id: "js",       nombre: "JavaScript", cat: "frontend", nivel: 4, desc: "ES6+, DOM y async/await." },
+        { id: "ts",       nombre: "TypeScript", cat: "frontend", nivel: 2, desc: "Tipado estático para JavaScript." },
+        { id: "react",    nombre: "React",      cat: "frontend", nivel: 3, desc: "Componentes, hooks y estado." },
+        { id: "tailwind", nombre: "Tailwind",   cat: "frontend", nivel: 3, desc: "CSS rápido con clases utilitarias." },
+
+        /* Backend */
+        { id: "node",    nombre: "Node.js",   cat: "backend", nivel: 3, desc: "JavaScript en el servidor." },
+        { id: "express", nombre: "Express",  cat: "backend", nivel: 3, desc: "APIs y rutas en Node." },
+        { id: "rest",    nombre: "REST APIs", cat: "backend", nivel: 3, desc: "Diseño y consumo de endpoints." },
+        { id: "python",  nombre: "Python",    cat: "backend", nivel: 2, desc: "Scripts y automatización." },
+
+        /* Bases de datos */
+        { id: "mysql", nombre: "MySQL",      cat: "datos", nivel: 3, desc: "Consultas, JOINs y modelos." },
+        { id: "mongo", nombre: "MongoDB",    cat: "datos", nivel: 3, desc: "Base de datos de documentos." },
+        { id: "pg",    nombre: "PostgreSQL", cat: "datos", nivel: 2, desc: "SQL con tipos avanzados." },
+
+        /* Herramientas */
+        { id: "git",    nombre: "Git & GitHub", cat: "tools", nivel: 4, desc: "Ramas, pull requests y GitHub Pages." },
+        { id: "docker", nombre: "Docker",       cat: "tools", nivel: 2, desc: "Contenedores, lo básico." },
+        { id: "linux",  nombre: "Linux",        cat: "tools", nivel: 2, desc: "Terminal y despliegues." },
+        { id: "vsc",    nombre: "VS Code",      cat: "tools", nivel: 5, desc: "Mi editor de cabecera." },
+        { id: "figma",  nombre: "Figma",        cat: "tools", nivel: 2, desc: "Prototipos y handoff de diseño." },
+      ];
+
+      /* ══════════════════════════════════════════════════════════════
+         2. PREPARACIÓN DE NODOS Y ENLACES
+         ══════════════════════════════════════════════════════════════ */
+
+      const colorDe = Object.fromEntries(CATEGORIAS.map(c => [c.id, c.color]));
+
+      const nodos = [
+        YO,
+        ...CATEGORIAS,
+        ...SKILLS.map(s => ({ ...s, tipo: "skill", color: colorDe[s.cat] })),
+      ];
+
+      const enlaces = [
+        ...CATEGORIAS.map(c => ({ source: YO.id, target: c.id })),
+        ...SKILLS.map(s => ({ source: s.cat, target: s.id })),
+      ];
+
+      /* Radio del nodo según tipo y nivel de la skill */
+      const radio = d =>
+        d.tipo === "yo" ? 34 :
+        d.tipo === "categoria" ? 21 :
+        10 + d.nivel * 2.4;
+
+      /* ══════════════════════════════════════════════════════════════
+         3. SVG Y SIMULACIÓN DE FUERZAS
+         ══════════════════════════════════════════════════════════════ */
+
+      let ancho = contenedor.clientWidth || 900;
+      let alto = contenedor.clientHeight || 600;
+
+      const svg = d3.select(contenedor).append("svg")
+        .attr("viewBox", [0, 0, ancho, alto])
+        .attr("role", "img")
+        .attr("aria-label", "Grafo interactivo con mis skills");
+
+      /* Filtro de brillo para los nodos */
+      const filtro = svg.append("defs")
+        .append("filter").attr("id", "glow")
+        .attr("x", "-60%").attr("y", "-60%").attr("width", "220%").attr("height", "220%");
+      filtro.append("feGaussianBlur").attr("stdDeviation", "3.5").attr("result", "blur");
+      const mezcla = filtro.append("feMerge");
+      mezcla.append("feMergeNode").attr("in", "blur");
+      mezcla.append("feMergeNode").attr("in", "SourceGraphic");
+
+      /* Posiciones iniciales aleatorias alrededor del centro */
+      nodos.forEach(d => {
+        d.x = ancho / 2 + (Math.random() - 0.5) * Math.min(ancho * 0.6, 420);
+        d.y = alto / 2 + (Math.random() - 0.5) * Math.min(alto * 0.6, 320);
+      });
+
+      const simulacion = d3.forceSimulation(nodos)
+        .force("enlace", d3.forceLink(enlaces).id(d => d.id)
+          .distance(l => l.target.tipo === "skill" ? 55 : 115)
+          .strength(l => l.target.tipo === "skill" ? 0.9 : 0.45))
+        .force("carga", d3.forceManyBody()
+          .strength(d => d.tipo === "yo" ? -700 : d.tipo === "categoria" ? -320 : -130))
+        .force("colision", d3.forceCollide().radius(d => radio(d) + 11).iterations(2))
+        .force("x", d3.forceX(ancho / 2).strength(0.05))
+        .force("y", d3.forceY(alto / 2).strength(0.07));
+
+      /* ══════════════════════════════════════════════════════════════
+         4. RENDER
+         ══════════════════════════════════════════════════════════════ */
+
+      const gEnlaces = svg.append("g");
+      const gNodos = svg.append("g");
+
+      const enlace = gEnlaces.selectAll("line").data(enlaces).join("line")
+        .attr("stroke", l => l.target.color)
+        .attr("stroke-width", 1.6);
+
+      const nodo = gNodos.selectAll("g").data(nodos).join("g")
+        .attr("class", "nodo")
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+
+      /* Círculo invisible para facilitar el arrastre */
+      nodo.append("circle")
+        .attr("r", d => radio(d) + 8)
+        .attr("fill", "#000")
+        .attr("fill-opacity", 0);
+
+      /* Anillo punteado que aparece cuando el nodo está fijado */
+      nodo.append("circle")
+        .attr("class", "anillo")
+        .attr("r", d => radio(d) + 6)
+        .attr("fill", "none")
+        .attr("stroke", d => d.color)
+        .attr("stroke-width", 1.2)
+        .attr("stroke-dasharray", "3 4");
+
+      /* Círculo principal */
+      nodo.append("circle")
+        .attr("class", "circulo")
+        .attr("r", radio)
+        .attr("fill", d => d.color)
+        .attr("fill-opacity", d => d.tipo === "skill" ? 0.92 : 1)
+        .attr("stroke", "rgba(255,255,255,0.45)")
+        .attr("stroke-width", d => d.tipo === "yo" ? 2 : 1)
+        .attr("filter", "url(#glow)");
+
+      /* Icono dentro del nodo central y de las categorías */
+      nodo.filter(d => d.icono).append("text")
+        .attr("class", d => `icono ${d.tipo}`)
+        .attr("text-anchor", "middle")
+        .attr("dy", "0.35em")
+        .text(d => d.icono);
+
+      /* Etiqueta debajo del nodo */
+      nodo.append("text")
+        .attr("class", d => `etiqueta ${d.tipo}`)
+        .attr("text-anchor", "middle")
+        .attr("y", d => radio(d) + 16)
+        .text(d => d.nombre);
+
+      /* Bucle de animación */
+      simulacion.on("tick", () => {
+        enlace
+          .attr("x1", l => l.source.x).attr("y1", l => l.source.y)
+          .attr("x2", l => l.target.x).attr("y2", l => l.target.y);
+        nodo.attr("transform", d => `translate(${d.x},${d.y})`);
+      });
+
+      /* ══════════════════════════════════════════════════════════════
+         5. INTERACCIÓN
+         ══════════════════════════════════════════════════════════════ */
+
+      const tooltip = document.getElementById("tooltip");
+      const puntos = n => "●".repeat(n) + "○".repeat(5 - n);
+
+      function moverTooltip(evento) {
+        const w = tooltip.offsetWidth, h = tooltip.offsetHeight;
+        let x = evento.clientX + 18, y = evento.clientY + 18;
+        if (x + w > window.innerWidth - 10) x = evento.clientX - w - 18;
+        if (y + h > window.innerHeight - 10) y = evento.clientY - h - 18;
+        tooltip.style.left = `${Math.max(10, x)}px`;
+        tooltip.style.top = `${Math.max(10, y)}px`;
+      }
+
+      function mostrarTooltip(evento, d) {
+        let html = "";
+        if (d.tipo === "skill") {
+          const cat = CATEGORIAS.find(c => c.id === d.cat);
+          html = `<h3>${d.nombre}</h3>
+            <span class="chip-mini" style="color:${d.color};border-color:${d.color}66;background:${d.color}1a">${cat.nombre}</span>
+            <div class="nivel">${puntos(d.nivel)}</div>
+            <p>${d.desc}</p>`;
+        } else if (d.tipo === "categoria") {
+          const total = SKILLS.filter(s => s.cat === d.id).length;
+          html = `<h3>${d.nombre}</h3><p>${d.desc}</p><p class="mini">${total} tecnologías</p>`;
+        } else {
+          html = `<h3>${d.nombre} 👋</h3><p>${d.desc}</p>`;
+        }
+        tooltip.innerHTML = html;
+        tooltip.classList.add("visible");
+        moverTooltip(evento);
+      }
+
+      function ocultarTooltip() { tooltip.classList.remove("visible"); }
+
+      /* Resalta un nodo y sus vecinos (2 niveles si es una skill) */
+      function vecinosDe(d) {
+        const profundidad = d.tipo === "skill" ? 2 : 1;
+        const vistos = new Set([d]);
+        let frontera = [d];
+        for (let i = 0; i < profundidad; i++) {
+          const siguientes = [];
+          for (const actual of frontera) {
+            for (const l of enlaces) {
+              if (l.source === actual && !vistos.has(l.target)) { vistos.add(l.target); siguientes.push(l.target); }
+              if (l.target === actual && !vistos.has(l.source)) { vistos.add(l.source); siguientes.push(l.source); }
+            }
+          }
+          frontera = siguientes;
+        }
+        return vistos;
+      }
+
+      function realzar(d) {
+        const vecinos = vecinosDe(d);
+        nodo.classed("realce", n => vecinos.has(n));
+        enlace.classed("realce", l => vecinos.has(l.source) && vecinos.has(l.target));
+        svg.classed("resaltado", true);
+      }
+
+      function limpiarRealce() {
+        svg.classed("resaltado", false);
+        nodo.classed("realce", false);
+        enlace.classed("realce", false);
+      }
+
+      /* Arrastre: al soltar, el nodo queda donde lo dejes (fijado) */
+      const arrastre = d3.drag()
+        .on("start", function (evento, d) {
+          if (!evento.active) simulacion.alphaTarget(0.25).restart();
+          d.fx = d.x; d.fy = d.y;
+          d3.select(this).raise();
+          document.body.classList.add("arrastrando");
+        })
+        .on("drag", function (evento, d) {
+          d.fx = evento.x; d.fy = evento.y;
+        })
+        .on("end", function (evento, d) {
+          if (!evento.active) simulacion.alphaTarget(0);
+          d.fijado = true;
+          d3.select(this).classed("fijado", true);
+          document.body.classList.remove("arrastrando");
+        });
+
+      nodo.call(arrastre)
+        .on("dblclick", function (evento, d) {
+          /* Doble clic: fijar / soltar un nodo */
+          d.fijado = !d.fijado;
+          if (d.fijado) { d.fx = d.x; d.fy = d.y; }
+          else { d.fx = null; d.fy = null; simulacion.alpha(0.4).restart(); }
+          d3.select(this).classed("fijado", d.fijado);
+        })
+        .on("pointerenter", function (evento, d) {
+          mostrarTooltip(evento, d);
+          realzar(d);
+        })
+        .on("pointermove", moverTooltip)
+        .on("pointerleave", function () {
+          limpiarRealce();
+          ocultarTooltip();
+        });
+
+      /* Botón reiniciar: suelta todos los nodos y recoloca el grafo */
+      document.getElementById("reiniciar").addEventListener("click", () => {
+        nodos.forEach(d => { d.fx = d.fy = null; d.fijado = false; });
+        nodo.classed("fijado", false);
+        simulacion.alpha(0.9).restart();
+      });
+
+      /* ══════════════════════════════════════════════════════════════
+         6. LEYENDA Y AJUSTE AL TAMAÑO DE PANTALLA
+         ══════════════════════════════════════════════════════════════ */
+
+      const leyenda = document.getElementById("leyenda");
+      const chipYo = document.createElement("span");
+      chipYo.className = "chip";
+      chipYo.innerHTML = '<i style="background:#f8fafc"></i>Raftxo (yo)';
+      leyenda.appendChild(chipYo);
+      CATEGORIAS.forEach(c => {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.innerHTML = `<i style="background:${c.color};box-shadow:0 0 8px ${c.color}"></i>${c.nombre}`;
+        leyenda.appendChild(chip);
+      });
+
+      new ResizeObserver(() => {
+        ancho = contenedor.clientWidth;
+        alto = contenedor.clientHeight;
+        if (!ancho || !alto) return;
+        svg.attr("viewBox", [0, 0, ancho, alto]);
+        simulacion.force("x", d3.forceX(ancho / 2).strength(0.05));
+        simulacion.force("y", d3.forceY(alto / 2).strength(0.07));
+        simulacion.alpha(0.15).restart();
+      }).observe(contenedor);
+    })();
+  </script>
+</body>
+</html>
